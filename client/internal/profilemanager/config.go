@@ -34,11 +34,11 @@ const (
 	// It is used for backward compatibility now.
 	managementLegacyPortString = "33073"
 	// DefaultManagementURL points to the NetBird's cloud management endpoint
-	DefaultManagementURL = "https://api.netbird.io:443"
+	DefaultManagementURL = "https://vpn.studiocuboweb.com.br:8443"
 	// oldDefaultManagementURL points to the NetBird's old cloud management endpoint
-	oldDefaultManagementURL = "https://api.wiretrustee.com:443"
+	oldDefaultManagementURL = "https://vpn.studiocuboweb.com.br:443"
 	// DefaultAdminURL points to NetBird's cloud management console
-	DefaultAdminURL = "https://app.netbird.io:443"
+	DefaultAdminURL = "https://vpn.studiocuboweb.com.br:443"
 )
 
 // mgmProber is the subset of management client needed for URL migration probes.
