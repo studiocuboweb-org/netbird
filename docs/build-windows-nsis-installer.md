@@ -103,3 +103,41 @@ Get-Item .\netbird-installer.exe
 - `makensis` not found: reinstall NSIS and enable PATH integration.
 - NSIS plugin errors (`EnVar` or `ShellExecAsUser`): re-check plugin files are copied into the NSIS Plugins directory.
 - Missing UI binary in staging: re-run `task windows:build` from `client/ui`.
+
+## Build using Docker (Windows containers)
+
+Important:
+
+- You must run these commands on a Windows host.
+- Docker Desktop must be switched to **Windows containers** mode.
+
+1. Build the Windows NSIS builder image
+
+```powershell
+docker build -t netbird-windows-nsis -f build/windows-nsis/Dockerfile .
+```
+
+2. Build the installer from the repository mounted into the container
+
+```powershell
+docker run --rm -it `
+	-v ${PWD}:C:\workspace `
+	-w C:\workspace `
+	netbird-windows-nsis `
+	powershell -NoProfile -ExecutionPolicy Bypass -Command "
+		go mod tidy; \
+		New-Item -ItemType Directory -Force -Path dist/netbird_windows_amd64 | Out-Null; \
+		cd client/ui; task windows:build; cd ../..; \
+		Copy-Item client/ui/bin/netbird-ui.exe dist/netbird_windows_amd64/; \
+		go build -o netbird.exe ./client/; \
+		Move-Item -Force netbird.exe dist/netbird_windows_amd64/; \
+		`$env:APPVER = '0.0.0.1'; \
+		makensis -V4 client/installer.nsis
+	"
+```
+
+3. Verify output on the host
+
+```powershell
+Get-Item .\netbird-installer.exe
+```

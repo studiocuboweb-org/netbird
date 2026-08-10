@@ -113,3 +113,27 @@ task linux:package
 - `wails3` or `task` not found: ensure `$(go env GOPATH)/bin` is in `PATH`.
 - Missing WebKit/GTK headers: re-run apt install for the Linux UI dependencies.
 - Docker image `wails-cross` missing: run `wails3 task setup:docker`.
+
+## Build using Docker (Ubuntu image)
+
+1. Build the Ubuntu packages builder image
+
+```bash
+docker build -t netbird-ubuntu-packager -f build/ubuntu-packages/Dockerfile .
+```
+
+2. Run package build inside the container
+
+```bash
+docker run --rm -it \
+	-v "$PWD":/workspace \
+	-w /workspace \
+	netbird-ubuntu-packager \
+	bash -lc 'go mod tidy && cd client/ui && task linux:build && task linux:package'
+```
+
+3. Verify artifacts on the host
+
+```bash
+ls -lah client/ui/bin/
+```
