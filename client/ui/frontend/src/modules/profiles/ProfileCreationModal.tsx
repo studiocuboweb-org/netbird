@@ -19,12 +19,13 @@ import { useRestrictions } from "@/contexts/RestrictionsContext.tsx";
 export type ProfileFormInitial = {
     name: string;
     managementUrl: string;
+    setupKey?: string;
 };
 
 type Props = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    onSubmit: (name: string, managementUrl: string) => void | Promise<void>;
+    onSubmit: (name: string, managementUrl: string, setupKey?: string) => void | Promise<void>;
     initial?: ProfileFormInitial;
 };
 
@@ -54,18 +55,22 @@ export const ProfileCreationModal = ({ open, onOpenChange, onSubmit, initial }: 
     const [checking, setChecking] = useState(false);
     const urlRef = useRef<HTMLInputElement>(null);
 
+    const [setupKey, setSetupKey] = useState(initial?.setupKey ?? "");
+    const setupKeyId = useId();
+
     useEffect(() => {
         if (open) {
             setName(initial?.name ?? "");
             setMode(initial ? initialModeFromUrl(initial.managementUrl) : ManagementMode.Cloud);
             setUrl(initial ? initialSelfHostedUrl(initial.managementUrl) : "");
+            setSetupKey(initial?.setupKey ?? "");
             setNameError(null);
             setUrlError(null);
             setUnreachable(false);
             setChecking(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [open, initial?.name, initial?.managementUrl]);
+    }, [open, initial?.name, initial?.managementUrl, initial?.setupKey];
 
     const initialModeRef = useRef<ManagementMode>(ManagementMode.Cloud);
     useEffect(() => {
@@ -136,7 +141,7 @@ export const ProfileCreationModal = ({ open, onOpenChange, onSubmit, initial }: 
             }
         }
 
-        await onSubmit(sanitized, target.url);
+        await onSubmit(sanitized, target.url, setupKey || undefined);
         onOpenChange(false);
     };
 
@@ -235,6 +240,26 @@ export const ProfileCreationModal = ({ open, onOpenChange, onSubmit, initial }: 
                                 </div>
                             </div>
                         )}
+
+                        <div className={"flex flex-col gap-2"}>
+                            <div className={"pl-1"}>
+                                <Label htmlFor={setupKeyId} className={"mb-0.5"}>
+                                    {t("profile.dialog.setupKeyLabel")}
+                                </Label>
+                                <HelpText margin={false}>
+                                    {t("profile.dialog.setupKeyHelp")}
+                                </HelpText>
+                            </div>
+                            <Input
+                                id={setupKeyId}
+                                placeholder={t("profile.dialog.setupKeyPlaceholder")}
+                                value={setupKey}
+                                onChange={(e) => setSetupKey(e.target.value)}
+                                spellCheck={false}
+                                autoComplete={"off"}
+                                autoCapitalize={"off"}
+                            />
+                        </div>
 
                         <DialogActions className={"flex-row items-center justify-end gap-2.5 pt-2"}>
                             <Button

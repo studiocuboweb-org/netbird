@@ -525,6 +525,9 @@ func (s *Server) setConfigInputFromRequest(msg *proto.SetConfigRequest) (profile
 	if msg.OptionalPreSharedKey != nil {
 		config.PreSharedKey = msg.OptionalPreSharedKey
 	}
+	if msg.SetupKey != nil {
+		config.SetupKey = msg.SetupKey
+	}
 
 	if msg.CleanDNSLabels {
 		config.DNSLabels = domain.List{}
@@ -2052,6 +2055,11 @@ func (s *Server) GetConfig(ctx context.Context, req *proto.GetConfigRequest) (*p
 		preSharedKey = "**********"
 	}
 
+	var setupKey = cfg.SetupKey
+	if setupKey != "" {
+		setupKey = "**********"
+	}
+
 	disableNotifications := true
 	if cfg.DisableNotifications != nil {
 		disableNotifications = *cfg.DisableNotifications
@@ -2101,6 +2109,7 @@ func (s *Server) GetConfig(ctx context.Context, req *proto.GetConfigRequest) (*p
 	return &proto.GetConfigResponse{
 		ManagementUrl:                 managementURL.String(),
 		PreSharedKey:                  preSharedKey,
+		SetupKey:                      setupKey,
 		AdminURL:                      adminURL.String(),
 		InterfaceName:                 cfg.WgIface,
 		WireguardPort:                 int64(cfg.WgPort),

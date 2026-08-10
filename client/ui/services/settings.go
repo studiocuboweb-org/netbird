@@ -67,6 +67,7 @@ type Config struct {
 	ConfigFile                    string `json:"configFile"`
 	LogFile                       string `json:"logFile"`
 	PreSharedKeySet               bool   `json:"preSharedKeySet"`
+	SetupKeySet                   bool   `json:"setupKeySet"`
 	InterfaceName                 string `json:"interfaceName"`
 	WireguardPort                 int64  `json:"wireguardPort"`
 	MTU                           int64  `json:"mtu"`
@@ -101,6 +102,7 @@ type SetConfigParams struct {
 	WireguardPort                 *int64  `json:"wireguardPort,omitempty"`
 	MTU                           *int64  `json:"mtu,omitempty"`
 	PreSharedKey                  *string `json:"preSharedKey,omitempty"`
+	SetupKey                      *string `json:"setupKey,omitempty"`
 	DisableAutoConnect            *bool   `json:"disableAutoConnect,omitempty"`
 	ServerSSHAllowed              *bool   `json:"serverSshAllowed,omitempty"`
 	RosenpassEnabled              *bool   `json:"rosenpassEnabled,omitempty"`
@@ -156,6 +158,7 @@ func (s *Settings) GetConfig(ctx context.Context, p ConfigParams) (Config, error
 		ConfigFile:                    resp.GetConfigFile(),
 		LogFile:                       resp.GetLogFile(),
 		PreSharedKeySet:               resp.GetPreSharedKey() != "",
+		SetupKeySet:                   resp.GetSetupKey() != "",
 		InterfaceName:                 resp.GetInterfaceName(),
 		WireguardPort:                 resp.GetWireguardPort(),
 		MTU:                           resp.GetMtu(),
@@ -194,6 +197,7 @@ func (s *Settings) SetConfig(ctx context.Context, p SetConfigParams) error {
 		WireguardPort:                 p.WireguardPort,
 		Mtu:                           p.MTU,
 		OptionalPreSharedKey:          p.PreSharedKey,
+		SetupKey:                      p.SetupKey,
 		DisableAutoConnect:            p.DisableAutoConnect,
 		ServerSSHAllowed:              p.ServerSSHAllowed,
 		RosenpassEnabled:              p.RosenpassEnabled,

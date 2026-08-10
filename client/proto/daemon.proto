@@ -348,6 +348,9 @@ message GetConfigResponse {
 
   bool block_lan_access = 20;
 
+  // setupKey is used for the first connection with a custom setup key.
+  string setupKey = 36;
+
   bool enableSSHRoot = 21;
 
   bool enableSSHSFTP = 24;
@@ -766,6 +769,9 @@ message SetConfigRequest {
   optional bool disableSSHAuth = 33;
   optional int32 sshJWTCacheTTL = 34;
   optional bool disable_ipv6 = 35;
+
+  // setupKey is used for the first connection with a custom setup key.
+  optional string setupKey = 36;
 }
 
 message SetConfigResponse{}

@@ -349,7 +349,7 @@ func newMainWindow(app *application.App, prefStore *preferences.Store) *applicat
 	}
 	window := app.Window.NewWithOptions(application.WebviewWindowOptions{
 		Name:   "main",
-		Title:  "NetBird",
+		Title:  "Studio Cubo Web VPN",
 		Width:  initialWidth,
 		Height: services.WindowHeight,
 		// Center on first show; minimal WMs (fluxbox, the XEmbed tray path)

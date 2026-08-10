@@ -69,6 +69,7 @@ type ConfigInput struct {
 	ConfigPath                    string
 	StateFilePath                 string
 	PreSharedKey                  *string
+	SetupKey                      *string
 	ServerSSHAllowed              *bool
 	EnableSSHRoot                 *bool
 	EnableSSHSFTP                 *bool
@@ -114,6 +115,7 @@ type Config struct {
 	// Wireguard private key of local peer
 	PrivateKey                    string
 	PreSharedKey                  string
+	SetupKey                      string
 	ManagementURL                 *url.URL
 	AdminURL                      *url.URL
 	WgIface                       string

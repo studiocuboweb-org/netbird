@@ -125,14 +125,19 @@ export function ProfilesTab() {
         void guarded(i18next.t("profile.error.deleteTitle"), () => removeProfile(id));
     };
 
-    const handleCreate = async (name: string, managementUrl: string) => {
+    const handleCreate = async (name: string, managementUrl: string, setupKey?: string) => {
         await guarded(i18next.t("profile.error.createTitle"), async () => {
             const id = await addProfile(name);
             // SetConfig is keyed by the new profile's ID, so it writes the
             // not-yet-active profile before the switch makes it current.
-            if (!isNetbirdCloud(managementUrl)) {
+            if (!isNetbirdCloud(managementUrl) || setupKey) {
                 await SettingsSvc.SetConfig(
-                    new SetConfigParams({ profileName: id, username, managementUrl }),
+                    new SetConfigParams({ 
+                        profileName: id, 
+                        username, 
+                        managementUrl,
+                        ...(setupKey && { setupKey }),
+                    }),
                 );
             }
             await switchProfileNoConnect(id);
@@ -146,27 +151,29 @@ export function ProfilesTab() {
             if (!profile) return;
             setEditTarget({
                 profile,
-                initial: { name, managementUrl: config.managementUrl },
+                initial: { name, managementUrl: config.managementUrl, setupKey: "" },
             });
         });
     };
 
-    const handleSave = async (name: string, managementUrl: string) => {
+    const handleSave = async (name: string, managementUrl: string, setupKey?: string) => {
         if (!editTarget) return;
         const { profile, initial } = editTarget;
         await guarded(i18next.t("profile.error.editTitle"), async () => {
             if (name !== initial.name) {
                 await renameProfile(profile.id, name);
             }
-            if (managementUrl !== initial.managementUrl) {
+            if (managementUrl !== initial.managementUrl || setupKey) {
                 await SettingsSvc.SetConfig(
                     new SetConfigParams({
                         profileName: profile.id,
                         username,
                         managementUrl,
+                        ...(setupKey && { setupKey }),
                     }),
                 );
             }
+            setEditTarget(null);
         });
     };
 

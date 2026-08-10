@@ -30,9 +30,6 @@ export const ManagementServerSwitch = ({ value, onChange, fullWidth = false }: P
                 />
                 {t("settings.general.management.cloud")}
             </SwitchItem>
-            <SwitchItem value={ManagementMode.SelfHosted} className={itemClass}>
-                {t("settings.general.management.selfHosted")}
-            </SwitchItem>
         </SwitchItemGroup>
     );
 };

@@ -118,7 +118,7 @@ export default function WelcomeDialog() {
     }, [initial, finish]);
 
     const handleManagementContinue = useCallback(
-        async (url: string) => {
+        async (url: string, setupKey?: string) => {
             if (!initial) return;
             try {
                 // SetConfig is a partial update — undefined fields are preserved Go-side.
@@ -127,6 +127,7 @@ export default function WelcomeDialog() {
                         profileName: initial.profileName,
                         username: initial.username,
                         managementUrl: url,
+                        ...(setupKey && { setupKey }),
                     }),
                 );
             } catch (e) {

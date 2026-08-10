@@ -4,7 +4,9 @@ import { Button } from "@/components/buttons/Button";
 import { DialogActions } from "@/components/dialog/DialogActions";
 import { DialogDescription } from "@/components/dialog/DialogDescription";
 import { DialogHeading } from "@/components/dialog/DialogHeading";
+import { HelpText } from "@/components/HelpText";
 import { Input } from "@/components/inputs/Input";
+import { Label } from "@/components/Label";
 import { ManagementServerSwitch } from "@/components/ManagementServerSwitch";
 import {
     CLOUD_MANAGEMENT_URL,
@@ -19,7 +21,7 @@ import { isMacOS } from "@/lib/platform.ts";
 
 type WelcomeStepManagementProps = {
     initialUrl: string;
-    onContinue: (url: string) => Promise<void>;
+    onContinue: (url: string, setupKey?: string) => Promise<void>;
 };
 
 export function WelcomeStepManagement({
@@ -35,6 +37,7 @@ export function WelcomeStepManagement({
     const [syntaxError, setSyntaxError] = useState<string | null>(null);
     const [unreachable, setUnreachable] = useState(false);
     const [checking, setChecking] = useState(false);
+    const [setupKey, setSetupKey] = useState("");
 
     const trimmedUrl = url.trim();
     const syntaxValid = mode === ManagementMode.Cloud || isValidManagementUrl(trimmedUrl);
@@ -75,11 +78,11 @@ export function WelcomeStepManagement({
             }
         }
         try {
-            await onContinue(target);
+            await onContinue(target, setupKey.trim() || undefined);
         } catch (e) {
             console.error("save management url:", e);
         }
-    }, [checking, mode, syntaxValid, trimmedUrl, unreachable, onContinue, t]);
+    }, [checking, mode, syntaxValid, trimmedUrl, unreachable, onContinue, setupKey, t]);
 
     const inputError = syntaxError ?? undefined;
     const inputWarning = useMemo(
@@ -118,6 +121,22 @@ export function WelcomeStepManagement({
                     />
                 </div>
             )}
+
+            <div className={"wails-no-draggable w-full text-left"}>
+                <div className={"mb-1 pl-1"}>
+                    <Label className={"mb-0.5"}>{t("profile.dialog.setupKeyLabel")}</Label>
+                    <HelpText margin={false}>{t("profile.dialog.setupKeyHelp")}</HelpText>
+                </div>
+                <Input
+                    placeholder={t("profile.dialog.setupKeyPlaceholder")}
+                    value={setupKey}
+                    onChange={(e) => setSetupKey(e.target.value)}
+                    spellCheck={false}
+                    autoComplete={"off"}
+                    autoCorrect={"off"}
+                    autoCapitalize={"off"}
+                />
+            </div>
 
             <DialogActions>
                 <Button
