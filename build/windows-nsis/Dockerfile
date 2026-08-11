@@ -1,7 +1,7 @@
 # escape=`
 # Windows container for building NetBird Windows artifacts and NSIS installer.
 # Build this image on a Windows host with Windows container mode enabled.
-FROM mcr.microsoft.com/windows/servercore:ltsc2025
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
 
 SHELL ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command"]
 
