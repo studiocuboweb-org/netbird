@@ -9,8 +9,8 @@ ARG GO_VERSION=1.25.1
 ARG NSIS_PLUGIN_ENVAR_URL=https://nsis.sourceforge.io/mediawiki/images/7/7f/EnVar_plugin.zip
 ARG NSIS_PLUGIN_SHELLEXEC_URL=https://nsis.sourceforge.io/mediawiki/images/6/68/ShellExecAsUser_amd64-Unicode.7z
 
-ENV GOPATH=C:\go-work
-ENV PATH=C:\go\bin;C:\go-work\bin;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;%PATH%
+ENV GOPATH="C:\go-work"
+ENV PATH="C:\go\bin;C:\go-work\bin;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;%PATH%"
 
 WORKDIR C:\workspace
 
