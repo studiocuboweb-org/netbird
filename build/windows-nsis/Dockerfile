@@ -2,57 +2,39 @@
 # Windows container for building NetBird Windows artifacts and NSIS installer.
 # Build this image on a Windows host with Windows container mode enabled.
 FROM mcr.microsoft.com/windows/servercore:ltsc2022
-
-SHELL ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command"]
-
-ARG GO_VERSION=1.25.1
-ARG NSIS_PLUGIN_ENVAR_URL=https://nsis.sourceforge.io/mediawiki/images/7/7f/EnVar_plugin.zip
-ARG NSIS_PLUGIN_SHELLEXEC_URL=https://nsis.sourceforge.io/mediawiki/images/6/68/ShellExecAsUser_amd64-Unicode.7z
-
 ENV GOPATH="C:\go-work"
-ENV PATH="C:\go\bin;C:\go-work\bin;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;%PATH%"
 
 WORKDIR C:\workspace
 
-RUN Set-ExecutionPolicy Bypass -Scope Process -Force; `
-  [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; `
-  iex ((New-Object Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')); `
-  choco feature enable -n allowGlobalConfirmation; `
-  choco install git 7zip nsis golang --version=$env:GO_VERSION nodejs-lts; `
+SHELL ["powershell.exe", "-Command"]
+
+# Install Chocolatey
+RUN [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
+    Invoke-WebRequest https://community.chocolatey.org/install.ps1 -OutFile C:\install.ps1; `
+    powershell -NoLogo -ExecutionPolicy Bypass -File C:\install.ps1
+
+# Enable global confirmation and install packages
+RUN choco feature enable -n allowGlobalConfirmation; `
+    choco install git 7zip nsis golang nodejs-lts; 
+    
+# Install corepack and enable pnpm
+#ENV PATH="C:\Program Files\nodejs;C:\Users\ContainerAdministrator\AppData\Roaming\npm;C:\go-work\bin;$env:PATH"
+
+RUN npm install -g corepack; `
   corepack enable; `
   corepack prepare pnpm@latest --activate
 
 RUN go install github.com/wailsapp/wails/v3/cmd/wails3@latest; `
-  go install github.com/go-task/task/v3/cmd/task@latest; `
-  go version; `
-  node --version; `
-  pnpm --version; `
-  wails3 version; `
-  task --version; `
-  makensis /VERSION
+    go install github.com/go-task/task/v3/cmd/task@latest; 
 
-RUN New-Item -ItemType Directory -Path C:\tmp -Force | Out-Null; `
-    Invoke-WebRequest -Uri $env:NSIS_PLUGIN_ENVAR_URL -OutFile C:\tmp\EnVar_plugin.zip; `
-    Invoke-WebRequest -Uri $env:NSIS_PLUGIN_SHELLEXEC_URL -OutFile C:\tmp\ShellExecAsUser.7z; `
-    7z x C:\tmp\EnVar_plugin.zip -oC:\tmp\envar -y | Out-Null; `
-    7z x C:\tmp\ShellExecAsUser.7z -oC:\tmp\shellexec -y | Out-Null; `
-    $nsisRoot = "$env:ProgramFiles(x86)\\NSIS"; `
-    $targets = @("$nsisRoot\\Plugins\\x86-unicode", "$nsisRoot\\Plugins\\amd64-unicode"); `
-    foreach ($target in $targets) { `
-      if (!(Test-Path $target)) { `
-        New-Item -ItemType Directory -Path $target -Force | Out-Null; `
-      } `
-    }; `
-    Get-ChildItem -Path C:\tmp\envar -Recurse -Filter *.dll | ForEach-Object { `
-      foreach ($target in $targets) { `
-        Copy-Item $_.FullName $target -Force; `
-      } `
-    }; `
-    Get-ChildItem -Path C:\tmp\shellexec -Recurse -Filter *.dll | ForEach-Object { `
-      foreach ($target in $targets) { `
-        Copy-Item $_.FullName $target -Force; `
-      } `
-    }; `
-    Remove-Item C:\tmp -Recurse -Force
+# Verify installations, sanity check 
+RUN node --version; `
+    npm --version; `
+    pnpm --version; `
+    go version;
 
-CMD ["powershell", "-NoLogo"]
+COPY build\\windows-nsis\\install-nsis-plugins.ps1 C:\scripts\install-nsis-plugins.ps1
+COPY build\\windows-nsis\\build.ps1 C:\scripts\build.ps1
+RUN powershell -NoLogo -ExecutionPolicy Bypass -File C:\scripts\install-nsis-plugins.ps1
+
+CMD ["powershell.exe", "-NoLogo"]
