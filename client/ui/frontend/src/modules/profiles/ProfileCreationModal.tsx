@@ -70,7 +70,7 @@ export const ProfileCreationModal = ({ open, onOpenChange, onSubmit, initial }: 
             setChecking(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [open, initial?.name, initial?.managementUrl, initial?.setupKey];
+    }, [open, initial?.name, initial?.managementUrl, initial?.setupKey]);
 
     const initialModeRef = useRef<ManagementMode>(ManagementMode.Cloud);
     useEffect(() => {

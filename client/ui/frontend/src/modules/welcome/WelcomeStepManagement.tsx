@@ -4,9 +4,9 @@ import { Button } from "@/components/buttons/Button";
 import { DialogActions } from "@/components/dialog/DialogActions";
 import { DialogDescription } from "@/components/dialog/DialogDescription";
 import { DialogHeading } from "@/components/dialog/DialogHeading";
-import { HelpText } from "@/components/HelpText";
+import { HelpText } from "@/components/typography/HelpText";
 import { Input } from "@/components/inputs/Input";
-import { Label } from "@/components/Label";
+import { Label } from "@/components/typography/Label";
 import { ManagementServerSwitch } from "@/components/ManagementServerSwitch";
 import {
     CLOUD_MANAGEMENT_URL,

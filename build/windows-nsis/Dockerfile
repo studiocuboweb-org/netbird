@@ -7,6 +7,7 @@ ENV GOPATH="C:\go-work"
 WORKDIR C:\workspace
 
 SHELL ["powershell.exe", "-Command"]
+USER ContainerAdministrator
 
 # Install Chocolatey
 RUN [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
@@ -15,11 +16,9 @@ RUN [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePoin
 
 # Enable global confirmation and install packages
 RUN choco feature enable -n allowGlobalConfirmation; `
-    choco install git 7zip nsis golang nodejs-lts; 
+    choco install git 7zip nsis golang nodejs-lts protoc; 
     
 # Install corepack and enable pnpm
-#ENV PATH="C:\Program Files\nodejs;C:\Users\ContainerAdministrator\AppData\Roaming\npm;C:\go-work\bin;$env:PATH"
-
 RUN npm install -g corepack; `
   corepack enable; `
   corepack prepare pnpm@latest --activate
@@ -35,6 +34,18 @@ RUN node --version; `
 
 COPY build\\windows-nsis\\install-nsis-plugins.ps1 C:\scripts\install-nsis-plugins.ps1
 COPY build\\windows-nsis\\build.ps1 C:\scripts\build.ps1
+COPY build\\windows-nsis\\generate-proto.ps1 C:\scripts\generate-proto.ps1
 RUN powershell -NoLogo -ExecutionPolicy Bypass -File C:\scripts\install-nsis-plugins.ps1
+
+# Env variable with the extra bits for the path
+ENV ADD_PATH=";C:\go-work\bin"
+
+# Change the path value directly in the registry key by appending the contents to the env variable to the contents of the path
+RUN Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value ((Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path + "$Env:ADD_PATH")
+
+# Verify the path is correct
+RUN (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
+
+COPY .\ C:\workspace\
 
 CMD ["powershell.exe", "-NoLogo"]
