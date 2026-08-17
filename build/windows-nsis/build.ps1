@@ -10,7 +10,7 @@ if (-not [string]::IsNullOrWhiteSpace($AppVer)) {
 }
 
 if([string]::IsNullOrWhiteSpace($env:APPVER)) {
-    $env:APPVER = Read-Host "Enter the version of the application (e.g., 1.0.0):"
+    $env:APPVER = Read-Host "Enter the version of the application (e.g., 1.0.0.0):"
 }
 
 if ($GenerateProto) {
@@ -54,9 +54,9 @@ if ($makeNsisCommand) {
 	$makeNsisPath = $makeNsisCommand.Source
 } else {
 	$candidatePaths = @(
-		"$env:ProgramData\chocolatey\bin\makensis.exe",
-		"$env:ProgramFiles(x86)\NSIS\makensis.exe",
-		"$env:ProgramFiles\NSIS\makensis.exe"
+		"C:\ProgramData\chocolatey\bin\makensis.exe",
+		"C:\Program Files (x86)\NSIS\makensis.exe",
+		"C:\Program Files\NSIS\makensis.exe"
 	)
 
 	foreach ($candidate in $candidatePaths) {

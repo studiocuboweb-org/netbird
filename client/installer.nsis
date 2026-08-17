@@ -269,7 +269,7 @@ SectionEnd
     InitPluginsDir
     CreateDirectory "$pluginsdir\webview2bootstrapper"
     SetOutPath "$pluginsdir\webview2bootstrapper"
-    File "MicrosoftEdgeWebview2Setup.exe"
+    File "C:\scripts\MicrosoftEdgeWebview2Setup.exe"
     ExecWait '"$pluginsdir\webview2bootstrapper\MicrosoftEdgeWebview2Setup.exe" /silent /install'
 
     SetDetailsPrint both

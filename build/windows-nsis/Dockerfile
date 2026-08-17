@@ -35,6 +35,8 @@ RUN node --version; `
 COPY build\\windows-nsis\\install-nsis-plugins.ps1 C:\scripts\install-nsis-plugins.ps1
 COPY build\\windows-nsis\\build.ps1 C:\scripts\build.ps1
 COPY build\\windows-nsis\\generate-proto.ps1 C:\scripts\generate-proto.ps1
+
+# -
 RUN powershell -NoLogo -ExecutionPolicy Bypass -File C:\scripts\install-nsis-plugins.ps1
 
 # Env variable with the extra bits for the path
