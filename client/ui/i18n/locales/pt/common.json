@@ -51,7 +51,7 @@
         "message": "{count} dias"
     },
     "tray.menu.open": {
-        "message": "Abrir o Studio Cubo Web"
+        "message": "Abrir"
     },
     "tray.menu.connect": {
         "message": "Conectar"
@@ -105,7 +105,7 @@
         "message": "—"
     },
     "tray.menu.quit": {
-        "message": "Sair do Studio Cubo Web"
+        "message": "Sair da VPN Studio Cubo Web"
     },
     "notify.daemonOutdated.title": {
         "message": "O serviço Studio Cubo Web está desatualizado"
@@ -1034,22 +1034,22 @@
         "message": "Atualizando"
     },
     "window.title.welcome": {
-        "message": "Bem-vindo ao Studio Cubo Web"
+        "message": "Bem-vindo à VPN da Studio Cubo Web"
     },
     "window.title.error": {
         "message": "Erro"
     },
     "welcome.title": {
-        "message": "Procure o Studio Cubo Web na sua bandeja"
+        "message": "Procure a VPN da Studio Cubo Web na sua bandeja"
     },
     "welcome.titleMac": {
-        "message": "Procure o Studio Cubo Web na sua barra de menus"
+        "message": "Procure a VPN da Studio Cubo Web na sua barra de menus"
     },
     "welcome.description": {
-        "message": "O Studio Cubo Web fica na sua bandeja. Clique no ícone para conectar, alternar perfis ou abrir as configurações."
+        "message": "A VPN da Studio Cubo Web fica na sua bandeja. Clique no ícone para conectar, alternar perfis ou abrir as configurações."
     },
     "welcome.descriptionMac": {
-        "message": "O Studio Cubo Web fica na sua barra de menus. Clique no ícone para conectar, alternar perfis ou abrir as configurações."
+        "message": "A VPN da Studio Cubo Web fica na sua barra de menus. Clique no ícone para conectar, alternar perfis ou abrir as configurações."
     },
     "welcome.continue": {
         "message": "Continuar"
@@ -1058,7 +1058,7 @@
         "message": "Voltar"
     },
     "welcome.management.title": {
-        "message": "Configurar o Studio Cubo Web"
+        "message": "Configurar a VPN da Studio Cubo Web"
     },
     "welcome.management.description": {
         "message": "Clique em Continuar para começar ou escolha Auto-hospedado se você tiver o seu próprio servidor Studio Cubo Web."
@@ -1298,7 +1298,7 @@
         "message": "Desconectar"
     },
     "daemon.unavailable.title": {
-        "message": "O serviço do Studio Cubo Web não está em execução"
+        "message": "O serviço da VPN SCW não está em execução"
     },
     "daemon.unavailable.description": {
         "message": "O aplicativo reconectará automaticamente assim que o serviço estiver em execução."
@@ -1334,7 +1334,7 @@
         "message": "O login foi rejeitado pelo servidor."
     },
     "error.daemon_unreachable": {
-        "message": "O daemon do Studio Cubo Web não está respondendo. Verifique se o serviço está em execução."
+        "message": "O daemon do SCW VPN não está respondendo. Verifique se o serviço está em execução."
     },
     "error.unknown": {
         "message": "A operação falhou."

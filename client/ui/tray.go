@@ -34,7 +34,7 @@ const (
 	quitDownTimeout = 5 * time.Second
 
 	urlGitHubRepo = "https://github.com/netbirdio/netbird"
-	urlDocs       = "https://docs.netbird.io"
+	urlDocs       = "https://studiocuboweb.com.br"
 )
 
 // TrayServices bundles the services the tray menu needs, grouped so NewTray
@@ -429,11 +429,8 @@ func (t *Tray) buildMenu() *application.Menu {
 	about.Add(t.loc.T("tray.menu.github")).OnClick(func(*application.Context) {
 		_ = t.app.Browser.OpenURL(urlGitHubRepo)
 	})
-	about.Add(t.loc.T("tray.menu.documentation")).OnClick(func(*application.Context) {
+	about.Add("Studio Cubo Web").OnClick(func(*application.Context) {
 		_ = t.app.Browser.OpenURL(urlDocs)
-	})
-	about.Add(t.loc.T("tray.menu.troubleshoot")).OnClick(func(*application.Context) {
-		t.svc.WindowManager.OpenSettings("troubleshooting")
 	})
 	about.AddSeparator()
 	about.Add(t.loc.T("tray.menu.guiVersion", "version", version.NetbirdVersion())).SetEnabled(false)
