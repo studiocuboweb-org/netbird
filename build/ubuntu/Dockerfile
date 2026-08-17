@@ -1,8 +1,11 @@
-FROM ubuntu:24.04
+FROM ubuntu:25.04
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG GO_VERSION=1.25.1
-ARG NODE_MAJOR=20
+ARG GO_VERSION=1.26.0
+ARG NODE_MAJOR=24
+
+# Ensure CI mode
+ENV CI=true
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -17,10 +20,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libsoup-3.0-dev \
     rpm \
     dpkg-dev \
+    protobuf-compiler \
     fakeroot \
     desktop-file-utils \
     libfuse2 \
     squashfs-tools \
+    sqlite3 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -fsSL "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" -o /tmp/go.tgz \
@@ -46,6 +51,7 @@ RUN corepack enable \
     && wails3 version \
     && task --version
 
+USER root
 WORKDIR /workspace
 
 CMD ["bash"]

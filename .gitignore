@@ -35,3 +35,6 @@ vendor/
 /netbird
 client/netbird-electron/
 management/server/types/testdata/
+.pnpm-store/v11/index.db
+.pnpm-store/v11/index.db-shm
+.pnpm-store/v11/index.db-wal

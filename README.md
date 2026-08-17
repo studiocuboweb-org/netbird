@@ -99,6 +99,16 @@ This is the quickest way to try self-hosted NetBird. It should take around 5 min
 - Download and run the installation script:
 ```bash
 export NETBIRD_DOMAIN=netbird.example.com; curl -fsSL https://github.com/netbirdio/netbird/releases/latest/download/getting-started.sh | bash
+
+```
+
+### Run the Netbird Client on Dev
+```
+# Linux / macOS
+task dev -- --daemon-addr=unix:///var/run/netbird.sock
+
+# Windows (named pipe — run a PowerShell with admin privileges)
+task dev -- --daemon-addr=npipe://netbird
 ```
 
 ### A bit on NetBird internals
@@ -129,6 +139,7 @@ In November 2022, NetBird joined the [StartUpSecure program](https://www.forschu
 
 ![CISPA_Logo_BLACK_EN_RZ_RGB (1)](https://user-images.githubusercontent.com/700848/203091324-c6d311a0-22b5-4b05-a288-91cbc6cdcc46.png)
 
+
 ### Acknowledgements
 We build on open-source technologies like [WireGuard®](https://www.wireguard.com/), [Pion ICE](https://github.com/pion/ice), and [Rosenpass](https://rosenpass.eu). We greatly appreciate the work these projects are doing, and we'd love it if you could support them too (e.g., by starring or contributing).
 
@@ -138,4 +149,3 @@ Those directories are licensed under the GNU Affero General Public License versi
 
 _WireGuard_ and the _WireGuard_ logo are [registered trademarks](https://www.wireguard.com/trademark-policy/) of Jason A. Donenfeld.
  
-

@@ -4,6 +4,6 @@
 *.key
 *.crt
 *.p12
-node_modules\
+node_modules/
 bindings
-client\ui\frontend\node_modules
+client/ui/frontend/node_modules

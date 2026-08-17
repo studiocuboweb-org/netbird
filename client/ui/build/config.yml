@@ -5,12 +5,12 @@ version: '3'
 
 # This information is used to generate the build assets.
 info:
-  companyName: "NetBird GmbH" # The name of the company
-  productName: "NetBird" # The name of the application
+  companyName: "Studio Cubo Web" # The name of the company
+  productName: "Studio Cubo Web VPN" # The name of the application
   productIdentifier: "io.netbird.client" # The unique product identifier
-  description: "NetBird desktop client" # The application description
-  copyright: "NetBird GmbH" # Copyright text
-  comments: "Some Product Comments" # Comments
+  description: "Studio Cubo Web VPN desktop client" # The application description
+  copyright: "Studio Cubo Web" # Copyright text
+  comments: "Powered by NetBird" # Comments
   version: "0.0.1" # The application version
   # cfBundleIconName: "appicon" # The macOS icon name in Assets.car icon bundles (optional)
   #                               # Should match the name of your .icon file without the extension
