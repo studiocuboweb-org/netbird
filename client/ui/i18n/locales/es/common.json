@@ -356,6 +356,18 @@
     "profile.dialog.urlUnreachable": {
         "message": "No se pudo contactar con este servidor. Compruebe la URL o añada el perfil de todos modos si está seguro de que es correcta."
     },
+    "profile.dialog.setupKeyLabel": {
+        "message": "Clave de instalación"
+    },
+    "profile.dialog.setupKeyHelp": {
+        "message": "Clave de instalación opcional para configurar automáticamente su conexión sin necesidad de iniciar sesión."
+    },
+    "profile.dialog.setupKeyPlaceholder": {
+        "message": "Ingrese la clave de instalación"
+    },
+    "profile.dialog.setupKeyAlreadySet": {
+        "message": "La clave de instalación no se puede cambiar después de la configuración inicial. Para usar una clave diferente, cree un nuevo perfil."
+    },
     "header.menu.settings": {
         "message": "Configuración..."
     },

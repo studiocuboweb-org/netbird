@@ -357,6 +357,18 @@
         "message": "Не удалось связаться с сервером. Проверьте URL или всё равно добавьте профиль, если уверены, что он правильный."
     },
     "header.menu.settings": {
+    "profile.dialog.setupKeyLabel": {
+        "message": "Setup Key"
+    },
+    "profile.dialog.setupKeyHelp": {
+        "message": "Опциональный ключ настройки для автоматической настройки соединения без входа."
+    },
+    "profile.dialog.setupKeyPlaceholder": {
+        "message": "Введите ключ настройки"
+    },
+    "profile.dialog.setupKeyAlreadySet": {
+        "message": "Ключ настройки не может быть изменен после первоначальной конфигурации. Чтобы использовать другой ключ, создайте новый профиль."
+    },
         "message": "Настройки…"
     },
     "header.menu.defaultView": {

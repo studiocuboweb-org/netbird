@@ -357,6 +357,18 @@
         "message": "A szerver nem érhető el. Ellenőrizze az URL-t, vagy adja hozzá a profilt, ha biztos benne, hogy helyes."
     },
     "header.menu.settings": {
+    "profile.dialog.setupKeyLabel": {
+        "message": "Setup Key"
+    },
+    "profile.dialog.setupKeyHelp": {
+        "message": "Opcionális setup key a kapcsolat automatikus konfigurálásához bejelentkezés nélkül."
+    },
+    "profile.dialog.setupKeyPlaceholder": {
+        "message": "Adja meg a setup key-t"
+    },
+    "profile.dialog.setupKeyAlreadySet": {
+        "message": "A setup key nem módosítható a kezdeti konfigurálás után. Más setup key használatához hozzon létre egy új profilt."
+    },
         "message": "Beállítások…"
     },
     "header.menu.defaultView": {

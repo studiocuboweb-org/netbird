@@ -247,7 +247,9 @@ export const ProfileCreationModal = ({ open, onOpenChange, onSubmit, initial }: 
                                     {t("profile.dialog.setupKeyLabel")}
                                 </Label>
                                 <HelpText margin={false}>
-                                    {t("profile.dialog.setupKeyHelp")}
+                                    {isEdit && initial?.setupKey
+                                        ? t("profile.dialog.setupKeyAlreadySet")
+                                        : t("profile.dialog.setupKeyHelp")}
                                 </HelpText>
                             </div>
                             <Input
@@ -255,6 +257,7 @@ export const ProfileCreationModal = ({ open, onOpenChange, onSubmit, initial }: 
                                 placeholder={t("profile.dialog.setupKeyPlaceholder")}
                                 value={setupKey}
                                 onChange={(e) => setSetupKey(e.target.value)}
+                                disabled={isEdit && !!initial?.setupKey}
                                 spellCheck={false}
                                 autoComplete={"off"}
                                 autoCapitalize={"off"}

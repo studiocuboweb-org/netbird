@@ -475,6 +475,22 @@
         "message": "Couldn't reach this server. Check the URL, or add the profile anyway if you're sure it's correct.",
         "description": "Soft warning when the entered server URL couldn't be reached; the user may add the profile anyway."
     },
+    "profile.dialog.setupKeyLabel": {
+        "message": "Setup Key",
+        "description": "Field label for the setup key input. 'Setup Key' is a Studio Cubo Web term — keep it."
+    },
+    "profile.dialog.setupKeyHelp": {
+        "message": "Optional setup key to automatically configure your connection without login.",
+        "description": "Helper text explaining what a setup key does."
+    },
+    "profile.dialog.setupKeyPlaceholder": {
+        "message": "Enter setup key",
+        "description": "Placeholder text in the setup key input field."
+    },
+    "profile.dialog.setupKeyAlreadySet": {
+        "message": "Setup key cannot be changed after initial configuration. To use a different setup key, create a new profile.",
+        "description": "Help text shown when the setup key has already been set and the field is disabled."
+    },
     "header.menu.settings": {
         "message": "Settings...",
         "description": "'More' menu item in the header that opens Settings. The trailing '...' signals a window opens."

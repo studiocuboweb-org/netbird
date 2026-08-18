@@ -357,6 +357,18 @@
         "message": "无法连接到此服务器。请检查 URL，如果确认无误，也可以照常添加该配置文件。"
     },
     "header.menu.settings": {
+    "profile.dialog.setupKeyLabel": {
+        "message": "设置密钥"
+    },
+    "profile.dialog.setupKeyHelp": {
+        "message": "可选设置密钥，用于无需登录即可自动配置您的连接。"
+    },
+    "profile.dialog.setupKeyPlaceholder": {
+        "message": "输入设置密钥"
+    },
+    "profile.dialog.setupKeyAlreadySet": {
+        "message": "初始配置后无法更改设置密钥。要使用其他设置密钥，请创建新配置文件。"
+    },
         "message": "设置…"
     },
     "header.menu.defaultView": {

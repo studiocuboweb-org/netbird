@@ -356,6 +356,18 @@
     "profile.dialog.urlUnreachable": {
         "message": "このサーバーに到達できませんでした。URLを確認するか、正しいことが確実な場合はそのままプロファイルを追加してください。"
     },
+    "profile.dialog.setupKeyLabel": {
+        "message": "Setup Key"
+    },
+    "profile.dialog.setupKeyHelp": {
+        "message": "ログインなしで接続を自動的に構成するためのオプションのセットアップキー。"
+    },
+    "profile.dialog.setupKeyPlaceholder": {
+        "message": "セットアップキーを入力してください"
+    },
+    "profile.dialog.setupKeyAlreadySet": {
+        "message": "初期設定後、セットアップキーは変更できません。別のセットアップキーを使用するには、新しいプロファイルを作成してください。"
+    },
     "header.menu.settings": {
         "message": "設定..."
     },

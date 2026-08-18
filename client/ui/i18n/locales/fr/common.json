@@ -356,6 +356,18 @@
     "profile.dialog.urlUnreachable": {
         "message": "Impossible de joindre ce serveur. Vérifiez l’URL, ou ajoutez le profil quand même si vous êtes sûr qu’elle est correcte."
     },
+    "profile.dialog.setupKeyLabel": {
+        "message": "Clé de configuration"
+    },
+    "profile.dialog.setupKeyHelp": {
+        "message": "Clé de configuration optionnelle pour configurer automatiquement votre connexion sans login."
+    },
+    "profile.dialog.setupKeyPlaceholder": {
+        "message": "Entrez la clé de configuration"
+    },
+    "profile.dialog.setupKeyAlreadySet": {
+        "message": "La clé de configuration ne peut pas être modifiée après la configuration initiale. Pour utiliser une clé différente, créez un nouveau profil."
+    },
     "header.menu.settings": {
         "message": "Paramètres..."
     },

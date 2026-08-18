@@ -356,6 +356,18 @@
     "profile.dialog.urlUnreachable": {
         "message": "Server nicht erreichbar. Überprüfen Sie die URL, oder fügen Sie das Profil trotzdem hinzu, wenn Sie sicher sind, dass sie korrekt ist."
     },
+    "profile.dialog.setupKeyLabel": {
+        "message": "Setup Key"
+    },
+    "profile.dialog.setupKeyHelp": {
+        "message": "Optionaler Setup Key zur automatischen Konfiguration Ihrer Verbindung ohne Anmeldung."
+    },
+    "profile.dialog.setupKeyPlaceholder": {
+        "message": "Setup Key eingeben"
+    },
+    "profile.dialog.setupKeyAlreadySet": {
+        "message": "Setup Key kann nach der Erstkonfiguration nicht mehr geändert werden. Um einen anderen Setup Key zu verwenden, erstellen Sie ein neues Profil."
+    },
     "header.menu.settings": {
         "message": "Einstellungen …"
     },
