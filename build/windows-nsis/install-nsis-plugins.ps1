@@ -5,7 +5,9 @@ New-Item -ItemType Directory -Path C:\tmp -Force | Out-Null
 Invoke-WebRequest -Uri "https://cloud.studiocuboweb.com.br/archive/Nsis_Plugin_EnvVar.zip" -OutFile C:\tmp\EnVar_plugin.zip
 Invoke-WebRequest -Uri "https://cloud.studiocuboweb.com.br/archive/Nsis_Plugin_ShellExecAsUser.7z" -OutFile C:\tmp\ShellExecAsUser.7z
 Invoke-WebRequest -Uri "https://cloud.studiocuboweb.com.br/archive/MicrosoftEdgeWebview2Setup.exe" -OutFile C:\scripts\MicrosoftEdgeWebview2Setup.exe
+Invoke-WebRequest -Uri "https://cloud.studiocuboweb.com.br/archive/wintun_amd64.zip" -OutFile C:\scripts\wintun_amd64.zip
 
+7z x C:\scripts\wintun_amd64.zip -oC:\scripts\wintun -y | Out-Null
 7z x C:\tmp\EnVar_plugin.zip -oC:\tmp\envar -y | Out-Null
 7z x C:\tmp\ShellExecAsUser.7z -oC:\tmp\shellexec -y | Out-Null
 
