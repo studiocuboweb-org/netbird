@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--
-  macOS Icon Composer source. Designed on a 1024x1024 canvas with the bird
-  glyph centered and sized to ~75% of canvas width, leaving padding for
-  the system squircle treatment.
--->
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
-  <g transform="translate(128, 227) scale(24.77)">
-    <path d="M21.4631 0.523438C17.8173 0.857913 16.0028 2.95675 15.3171 4.01871L4.66406 22.4734H17.5163L30.1929 0.523438H21.4631Z" fill="#F68330"/>
-    <path d="M17.5265 22.4737L0 3.88525C0 3.88525 19.8177 -1.44128 21.7493 15.1738L17.5265 22.4737Z" fill="#F68330"/>
-    <path d="M14.9236 4.70563L9.54688 14.0208L17.5158 22.4747L21.7385 15.158C21.0696 9.44682 18.2851 6.32784 14.9236 4.69727" fill="#F05252"/>
-  </g>
+<svg
+   width="1024"
+   height="1024"
+   viewBox="0 0 1024 1024"
+   fill="none"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="icone-studiocubo.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.53284182"
+     inkscape:cx="994.66667"
+     inkscape:cy="306.84528"
+     inkscape:window-width="1920"
+     inkscape:window-height="1052"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     d="M 252.86903,371.0304 516.54934,512.45446 778.23785,371.95408 M 516.54934,763.0561 V 511.99399 M 352.66649,1008.6474 252.66127,1006.9453 C 102.65414,1004.3963 4.3499974,902.69037 6.9005531,752.6846 L 15.40236,252.66127 C 17.952888,102.65414 119.65775,4.3499974 269.66489,6.9005531 L 369.66818,8.6009144 M 652.68076,1013.7482 l 100.00384,1.6993 c 150.00577,2.5518 251.7117,-95.7527 254.2607,-245.75846 l 8.5022,-500.02415 C 1017.9993,119.65775 919.6948,17.952888 769.68904,15.40236 L 669.68245,13.701998 M 454.85755,234.21376 295.65613,316.21275 c -35.82169,18.42695 -65.6721,64.95343 -65.6721,103.18875 v 156.16452 c 0,38.23532 29.35266,84.7618 65.6721,103.18875 l 159.20142,81.99625 c 33.83072,17.50602 89.55286,17.50602 123.87968,0 l 159.20416,-81.99625 c 35.8206,-18.42695 65.67155,-64.95343 65.67155,-103.18875 V 419.4015 c 0,-38.23532 -29.35485,-84.7618 -65.67155,-103.18875 L 578.73723,234.21376 c -34.32682,-17.96594 -90.04896,-17.96594 -123.87968,0 z"
+     stroke="#683fea"
+     stroke-width="13.7044"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path1" />
 </svg>
