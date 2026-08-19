@@ -151,7 +151,7 @@ export function ProfilesTab() {
             if (!profile) return;
             setEditTarget({
                 profile,
-                initial: { name, managementUrl: config.managementUrl, setupKey: "" },
+                initial: { name, managementUrl: config.managementUrl, setupKey: config.setupKey ?? "" },
             });
         });
     };

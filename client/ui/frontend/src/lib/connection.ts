@@ -1,5 +1,5 @@
 import { Events } from "@wailsio/runtime";
-import { Connection, WindowManager } from "@bindings/services";
+import { Connection, WindowManager, Profiles as ProfilesSvc, Settings as SettingsSvc } from "@bindings/services";
 import i18next from "@/lib/i18n";
 import { errorDialog, formatErrorMessage } from "@/lib/errors.ts";
 
@@ -88,11 +88,34 @@ export async function startConnection(onSettled?: () => void, signal?: AbortSign
     let connectError: unknown;
 
     try {
+        // Fetch active profile and its config to retrieve the stored setup key
+        let profileName = "";
+        let username = "";
+        let setupKey = "";
+        let managementUrl = "";
+
+        try {
+            username = await ProfilesSvc.Username();
+            const active = await ProfilesSvc.GetActive();
+            profileName = active.id || "default";
+
+            // Retrieve the config for the active profile, which includes setupKey if configured
+            const config = await SettingsSvc.GetConfig({
+                profileName,
+                username,
+            });
+            setupKey = config.setupKey || "";
+            managementUrl = config.managementUrl || "";
+        } catch (e) {
+            // If we can't fetch config, continue without setup key (will fall back to SSO)
+            console.warn("Failed to fetch active profile config:", e);
+        }
+
         const result = await Connection.Login({
-            profileName: "",
-            username: "",
-            managementUrl: "",
-            setupKey: "",
+            profileName,
+            username,
+            managementUrl,
+            setupKey,  // Now passes the actual stored setup key instead of empty string
             preSharedKey: "",
             hostname: "",
             hint: "",
@@ -106,7 +129,7 @@ export async function startConnection(onSettled?: () => void, signal?: AbortSign
         } else {
             if (!state.cancelled && signal?.aborted) state.cancelled = true;
             if (!state.cancelled) {
-                await Connection.Up({ profileName: "", username: "" });
+                await Connection.Up({ profileName, username });
             }
         }
     } catch (e) {

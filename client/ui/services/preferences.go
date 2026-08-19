@@ -38,3 +38,8 @@ func (s *Preferences) SetOnboardingCompleted(_ context.Context, done bool) error
 func (s *Preferences) SetKeepConnectedOnQuit(_ context.Context, keep bool) error {
 	return s.store.SetKeepConnectedOnQuit(keep)
 }
+
+
+func (s *Preferences) SetFirstStartup(_ context.Context, first bool) error {
+	return s.store.SetFirstStartup(first)
+}

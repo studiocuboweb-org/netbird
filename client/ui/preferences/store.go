@@ -54,6 +54,11 @@ type UIPreferences struct {
 	Language            i18n.LanguageCode `json:"language"`
 	ViewMode            ViewMode          `json:"viewMode"`
 	OnboardingCompleted bool              `json:"onboardingCompleted"`
+	// FirstStartup is set to true on first app launch, forcing the welcome
+	// page to display. It is cleared once the welcome flow completes.
+	// Unlike OnboardingCompleted, this is checked before every app start
+	// and can be reset during development or on profile changes.
+	FirstStartup bool `json:"firstStartup"`
 	// AutostartInitialized records that the one-time autostart default
 	// decision has run for this OS user. It only ever transitions to true
 	// and is never reset, so the default-on flow runs at most once, ever.
@@ -101,11 +106,13 @@ func NewStore(validator LanguageValidator, emitter Emitter) (*Store, error) {
 
 	// Language starts empty: the frontend treats absence as the signal to
 	// detect the browser locale on first launch and call SetLanguage.
+	// FirstStartup defaults to true (file doesn't exist) to force the welcome
+	// page on first app launch.
 	s := &Store{
 		path:      path,
 		validator: validator,
 		emitter:   emitter,
-		current:   UIPreferences{ViewMode: DefaultViewMode},
+		current:   UIPreferences{ViewMode: DefaultViewMode, FirstStartup: false},
 	}
 
 	if err := s.load(); err != nil {
@@ -155,6 +162,27 @@ func (s *Store) SetOnboardingCompleted(done bool) error {
 	}
 	next := s.current
 	next.OnboardingCompleted = done
+	if err := s.persistLocked(next); err != nil {
+		s.mu.Unlock()
+		return fmt.Errorf("persist preferences: %w", err)
+	}
+	s.current = next
+	s.mu.Unlock()
+
+	s.broadcast(next)
+	return nil
+}
+
+// SetFirstStartup persists the first-startup flag. No-op if unchanged.
+// When cleared (set to false), the welcome dialog will not show on the next launch.
+func (s *Store) SetFirstStartup(done bool) error {
+	s.mu.Lock()
+	if s.current.FirstStartup == done {
+		s.mu.Unlock()
+		return nil
+	}
+	next := s.current
+	next.FirstStartup = done
 	if err := s.persistLocked(next); err != nil {
 		s.mu.Unlock()
 		return fmt.Errorf("persist preferences: %w", err)
@@ -330,5 +358,7 @@ func preferencesPath() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return filepath.Join(dir, "netbird", preferencesFileName), nil
+	file := filepath.Join(dir, "netbird", preferencesFileName)
+	log.Infof("preferences path: %s", file)
+	return file, nil
 }

@@ -378,6 +378,12 @@ func (config *Config) apply(input ConfigInput) (updated bool, err error) {
 		updated = true
 	}
 
+	if input.SetupKey != nil && *input.SetupKey != config.SetupKey {
+		log.Infof("new setup key provided, replacing old key")
+		config.SetupKey = *input.SetupKey
+		updated = true
+	}
+
 	if input.RosenpassEnabled != nil && *input.RosenpassEnabled != config.RosenpassEnabled {
 		log.Infof("switching Rosenpass to %t", *input.RosenpassEnabled)
 		config.RosenpassEnabled = *input.RosenpassEnabled

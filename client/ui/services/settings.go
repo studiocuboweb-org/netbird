@@ -67,6 +67,7 @@ type Config struct {
 	ConfigFile                    string `json:"configFile"`
 	LogFile                       string `json:"logFile"`
 	PreSharedKeySet               bool   `json:"preSharedKeySet"`
+	SetupKey                      string `json:"setupKey"`
 	SetupKeySet                   bool   `json:"setupKeySet"`
 	InterfaceName                 string `json:"interfaceName"`
 	WireguardPort                 int64  `json:"wireguardPort"`
@@ -158,6 +159,7 @@ func (s *Settings) GetConfig(ctx context.Context, p ConfigParams) (Config, error
 		ConfigFile:                    resp.GetConfigFile(),
 		LogFile:                       resp.GetLogFile(),
 		PreSharedKeySet:               resp.GetPreSharedKey() != "",
+		SetupKey:                      resp.GetSetupKey(),
 		SetupKeySet:                   resp.GetSetupKey() != "",
 		InterfaceName:                 resp.GetInterfaceName(),
 		WireguardPort:                 resp.GetWireguardPort(),
@@ -188,6 +190,13 @@ func (s *Settings) SetConfig(ctx context.Context, p SetConfigParams) error {
 	if err != nil {
 		return err
 	}
+
+	log.Debugf("SetConfig: %+v", p)
+
+	if p.SetupKey != nil && *p.SetupKey == "" {
+		log.Infof(" -setupKeySet=%v", string((*p.SetupKey)[0:5]))
+	}
+
 	req := &proto.SetConfigRequest{
 		ProfileName:                   p.ProfileName,
 		Username:                      p.Username,

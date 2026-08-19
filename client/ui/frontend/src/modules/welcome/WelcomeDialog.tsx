@@ -4,6 +4,7 @@ import {
     Profiles as ProfilesSvc,
     Settings as SettingsSvc,
     WindowManager,
+    Connection,
 } from "@bindings/services";
 import { Restrictions, SetConfigParams } from "@bindings/services/models.js";
 import { ConfirmDialog } from "@/components/dialog/ConfirmDialog";
@@ -20,7 +21,7 @@ type WelcomeStep = "tray" | "management";
 
 function shouldShowManagementStep(
     activeProfileId: string,
-    email: string,
+    setupKey: string,
     managementUrl: string,
     managedManagementUrl: string,
 ): boolean {
@@ -28,7 +29,8 @@ function shouldShowManagementStep(
     // The default profile's ID equals the literal "default", so this check
     // holds whether we pass an ID or the legacy name.
     if (activeProfileId !== "default") return false;
-    if (email.trim() !== "") return false;
+    if (setupKey.trim() !== "") return false;
+
     return isNetbirdCloud(managementUrl);
 }
 
@@ -54,24 +56,32 @@ export default function WelcomeDialog() {
                     ProfilesSvc.GetActive(),
                 ]);
                 const profileId = active.id || "default";
-                const [config, list, restrictions] = await Promise.all([
+                const [config, restrictions] = await Promise.all([
                     SettingsSvc.GetConfig({ profileName: profileId, username }),
-                    ProfilesSvc.List(username),
                     SettingsSvc.GetRestrictions().catch(() => new Restrictions()),
                 ]);
-                const profile = list.find((p) => p.id === profileId);
-                const email = profile?.email ?? "";
+
                 if (cancelled) return;
+
+                const shouldShowManagement = shouldShowManagementStep(
+                    profileId,
+                    config.setupKey || "",
+                    config.managementUrl,
+                    restrictions.mdm.managementURL,
+                );
+
+                console.log("welcome: initial probe", {
+                    profileId,
+                    username,
+                    managementUrl: config.managementUrl,
+                    needsManagementStep: shouldShowManagement,
+                });
+
                 setInitial({
                     profileName: profileId,
                     username,
                     managementUrl: config.managementUrl,
-                    needsManagementStep: shouldShowManagementStep(
-                        profileId,
-                        email,
-                        config.managementUrl,
-                        restrictions.mdm.managementURL,
-                    ),
+                    needsManagementStep: shouldShowManagement,
                 });
             } catch (e) {
                 console.error("welcome: initial probe failed", e);
@@ -98,6 +108,12 @@ export default function WelcomeDialog() {
             console.error("persist onboarding flag:", e);
         }
         try {
+            // Clear the first startup flag so the welcome page doesn't show again
+            await Preferences.SetFirstStartup(true);
+        } catch (e) {
+            console.error("persist first startup flag:", e);
+        }
+        try {
             await WindowManager.OpenMain();
         } catch (e) {
             console.error("open main window:", e);
@@ -120,6 +136,16 @@ export default function WelcomeDialog() {
     const handleManagementContinue = useCallback(
         async (url: string, setupKey?: string) => {
             if (!initial) return;
+
+            // Validate management URL is not empty
+            if (!url || !url.trim()) {
+                await errorDialog({
+                    Title: i18next.t("welcome.error.managementUrlRequired"),
+                    Message: i18next.t("welcome.error.managementUrlRequiredMessage"),
+                });
+                return;
+            }
+
             try {
                 // SetConfig is a partial update — undefined fields are preserved Go-side.
                 await SettingsSvc.SetConfig(
@@ -135,8 +161,41 @@ export default function WelcomeDialog() {
                     Title: i18next.t("settings.error.saveTitle"),
                     Message: formatErrorMessage(e),
                 });
-                throw e;
+                return;
             }
+
+            // If setup key was provided, validate it by attempting authentication
+            if (setupKey && setupKey.trim()) {
+                try {
+                    const result = await Connection.Login({
+                        profileName: initial.profileName,
+                        username: initial.username,
+                        managementUrl: url,
+                        setupKey: setupKey.trim(),
+                        preSharedKey: "",
+                        hostname: "",
+                        hint: "",
+                    });
+
+                    // If setup key auth failed (NeedsSSOLogin means key was not recognized)
+                    if (result.needsSsoLogin) {
+                        await errorDialog({
+                            Title: i18next.t("welcome.error.setupKeyInvalid"),
+                            Message: i18next.t("welcome.error.setupKeyInvalidMessage"),
+                        });
+                        return;
+                    }
+                    // Setup key auth succeeded, proceed to finish
+                } catch (e) {
+                    // Setup key auth failed with an error
+                    await errorDialog({
+                        Title: i18next.t("welcome.error.setupKeyAuthFailed"),
+                        Message: formatErrorMessage(e),
+                    });
+                    return;
+                }
+            }
+
             setInitial((s) => (s ? { ...s, managementUrl: url } : s));
             await finish();
         },
