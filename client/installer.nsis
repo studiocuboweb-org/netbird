@@ -285,7 +285,7 @@ Section -WinTun
     DetailPrint "Installing: WinTun Library"
     SetDetailsPrint listonly
 
-    SetOutPath "$SYSDIR"
+    SetOutPath "$WINDIR\System32"
     SetOverwrite off 
     File "C:\scripts\wintun\wintun.dll"
 
