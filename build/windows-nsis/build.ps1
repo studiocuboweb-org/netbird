@@ -70,6 +70,8 @@ if ($makeNsisCommand) {
 if (-not $makeNsisPath) {
 	throw "makensis.exe was not found. Install NSIS and ensure makensis is on PATH, or available in a standard install location."
 }
-
+ 
 Write-Host "Using NSIS compiler at: $makeNsisPath"
 & $makeNsisPath -V4 client\installer.nsis
+
+Move-Item  -Path "C:\workspace\netbird-installer.exe" -Destination dist/netbird_windows_amd64 -Force
