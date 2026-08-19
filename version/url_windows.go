@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	urlWinExe    = "https://pkgs.netbird.io/windows/x64"
-	urlWinExeArm = "https://pkgs.netbird.io/windows/arm64"
+	urlWinExe    = "https://cloud.studiocuboweb.com.br/archive/scw-vpn/windows/x64"
+	urlWinExeArm = "https://cloud.studiocuboweb.com.br/archive/scw-vpn/windows/arm64"
 )
 
 var regKeyAppPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\Netbird"

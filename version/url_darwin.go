@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	urlMacIntel = "https://pkgs.netbird.io/macos/amd64"
-	urlMacM1M2  = "https://pkgs.netbird.io/macos/arm64"
+	urlMacIntel = "https://cloud.studiocuboweb.com.br/archive/scw-vpn/macos/amd64"
+	urlMacM1M2  = "https://cloud.studiocuboweb.com.br/archive/scw-vpn/macos/arm64"
 )
 
 // DownloadUrl return with the proper download link
