@@ -280,6 +280,18 @@ Section -WebView2
     !insertmacro nb.webview2runtime
 SectionEnd
 
+Section -WinTun
+    SetDetailsPrint both
+    DetailPrint "Installing: WinTun Library"
+    SetDetailsPrint listonly
+
+    SetOutPath "$SYSDIR"
+    SetOverwrite off 
+    File "C:\scripts\wintun\wintun.dll"
+
+    SetDetailsPrint both
+SectionEnd
+
 Section -Post
 ExecWait '"$INSTDIR\${MAIN_APP_EXE}" service install'
 ExecWait '"$INSTDIR\${MAIN_APP_EXE}" service start'
